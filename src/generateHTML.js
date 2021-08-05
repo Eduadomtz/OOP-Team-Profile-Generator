@@ -1,58 +1,58 @@
 const generateTeam = data => {
-    function generateManager(data) {
+    function generateManager(manager) {
         return `<div class="col">
             <div class="card border-dark mb-3" style="max-width: 18rem;">
                 <div class="card-header">
-                    <h3>${data.name}</h3>
+                    <h3>${manager.name}</h3>
                     <h4> 📈 </h4>
                 </div>
             
                 <div class="card-body text-dark">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> ID:${data.id} </li>
-                        <li class="list-group-item">Email: ${data.email}</li>
-                        <li class="list-group-item">Office number: </li>
+                        <li class="list-group-item"> ID:${manager.id} </li>
+                        <li class="list-group-item">Email: ${manager.email}</li>
+                        <li class="list-group-item">Office number:${manager.officeNumber} </li>
                     </ul>
                 </div>
             </div>
-            </div>`
+            </div>`;
     }
-    function generateEngineer(data) {
+    function generateEngineer(engineer) {
         return `<div class="col">
                 <div class="card border-dark mb-3" style="max-width: 18rem;">
                     <div class="card-header">
-                        <h3>${data.name}</h3>
+                        <h3>${engineer.name}</h3>
                         <h4> ⚙️ </h4>
                     </div>
             
                     <div class="card-body text-dark">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">ID: ${data.id}</li>
-                            <li class="list-group-item">Email: ${data.email}</li>
-                            <li class="list-group-item">Github: ${data.github} </li>
+                            <li class="list-group-item">ID: ${engineer.id}</li>
+                            <li class="list-group-item">Email: ${engineer.email}</li>
+                            <li class="list-group-item">Github: ${engineer.github} </li>
                         </ul>
                     </div>
                 </div>
             </div>`;
     }
 
-    function generateIntern(data) {
+    function generateIntern(intern) {
         return `<div class="col">
             <div class="card border-dark mb-3" style="max-width: 18rem;">
                 <div class="card-header">
-                    <h3>${data.name}</h3>
+                    <h3>${intern.name}</h3>
                     <h4>👨‍🎓 </h4>
                 </div>
             
                 <div class="card-body text-dark">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> ID: ${data.id}</li>
-                        <li class="list-group-item">Email: ${data.email}</li>
-                        <li class="list-group-item">School: ${data.school}</li>
+                        <li class="list-group-item"> ID: ${intern.id}</li>
+                        <li class="list-group-item">Email: ${intern.email}</li>
+                        <li class="list-group-item">School: ${intern.school}</li>
                     </ul>
                 </div>
             </div>
-            </div>`
+            </div>`;
     }
 
     const html = [];

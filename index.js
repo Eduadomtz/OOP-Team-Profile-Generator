@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const render = require('./dist/generateHTML.js');
+const render = require('./src/generateHTML.js');
 
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
@@ -11,22 +11,22 @@ const teamMembers = [];
 const managerQuestions = [
     {
         type: 'input',
-        name: 'Managername',
+        name: 'ManagerName',
         message: `What is the team manager's name?`,
     },
     {
         type: 'input',
-        name: 'Managerid',
+        name: 'ManagerId',
         message: `What is the team manager's id?`,
     },
     {
         type: 'input',
-        name: 'Managersemail',
+        name: 'ManagerEmail',
         message: `What is the team manager's email?`,
     },
     {
         type: 'input',
-        name: 'Managernumber',
+        name: 'ManagerNumber',
         message: `What is the team manager's office number?`,
     },
 ];
@@ -59,7 +59,7 @@ const engineerQuestions =
         },
         {
             type: 'input',
-            name: 'EmployeesGithub',
+            name: 'EngenieerGithub',
             message: `What is you Engineer Github userman? `,
         },
     ];
@@ -91,30 +91,34 @@ const internQuestions =
 
 function addManager(data) {
     const manager = new Manager(
-        data.name,
-        data.id,
-        data.email,
-        data.officeNumber);
+        data.ManagerName,
+        data.ManagerId,
+        data.ManagerEmail,
+        data.ManagerNumber);
     teamMembers.push(manager);
-    // writeToFile("index.html", render(teamMembers));
     newMember()
 }
 
 function addEngenieer(data) {
-    const engineer = new Engineer(data.name,
-        data.id,
-        data.email,
-        data.github);
+    const engineer = new Engineer(
+        data.EngineerName,
+        data.EngineerId,
+        data.EngineerEmail,
+        data.EngenieerGithub);
     teamMembers.push(engineer);
+    writeToFile("index.html", render(teamMembers))
+    newMember();
 }
 
 function addIntern(data) {
     const intern = new Intern(
-        data.name,
-        data.id,
-        data.email,
-        data.github);
+        data.InternName,
+        data.InternId,
+        data.InternEmail,
+        data.InternGithub);
     teamMembers.push(intern);
+    writeToFile("index.html", render(teamMembers))
+    newMember();
 }
 
 
@@ -128,6 +132,9 @@ function newMember() {
                     break;
                 case "Intern":
                     inquirer.prompt(internQuestions).then((data) => addIntern(data));
+                    break;
+                case "I don't want to add any more team members":
+                    break;
                 default:
                     break;
             }
