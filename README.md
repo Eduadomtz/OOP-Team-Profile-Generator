@@ -15,7 +15,7 @@
   ## Usage
   User must clone the repository into their local computers, then open their terminals and run de app with node.
 
-<img src="./images/Team-generator.gif">
+<img src="./images/Team-Generator.gif">
 
   ## License
   GPL 3.0
