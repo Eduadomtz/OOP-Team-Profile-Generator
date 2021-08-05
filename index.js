@@ -1,12 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateMarkdown = require('./dist/generateMarkdown');
-//const generateHTML = require('./dist/index');
+const render = require('./dist/generateHTML.js');
 
-const Employee = require("./lib/Employee.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 const Manager = require("./lib/Manager.js");
+
+const teamMembers = [];
 
 const managerQuestions = [
     {
@@ -74,59 +74,83 @@ const internQuestions =
         {
             type: 'input',
             name: 'InternId',
-            message: `What is you Intern id? `,
+            message: `What is your Intern id? `,
         },
         {
             type: 'input',
             name: 'InternEmail',
-            message: `What is you Intern email? `,
+            message: `What is your Intern email? `,
         },
         {
             type: 'input',
             name: 'InternGithub',
-            message: `What is you Intern Github userman? `,
+            message: `What is your Intern Github userman? `,
         }
     ];
 
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => {
+
+function addManager(data) {
+    const manager = new Manager(
+        data.name,
+        data.id,
+        data.email,
+        data.officeNumber);
+    teamMembers.push(manager);
+    // writeToFile("index.html", render(teamMembers));
+    newMember()
+}
+
+function addEngenieer(data) {
+    const engineer = new Engineer(data.name,
+        data.id,
+        data.email,
+        data.github);
+    teamMembers.push(engineer);
+}
+
+function addIntern(data) {
+    const intern = new Intern(
+        data.name,
+        data.id,
+        data.email,
+        data.github);
+    teamMembers.push(intern);
+}
+
+
+function newMember() {
+    inquirer.prompt(employeeQuestions)
+        .then((data) => {
+
+            switch (data.memberType) {
+                case "Engineer":
+                    inquirer.prompt(engineerQuestions).then((data) => addEngenieer(data));
+                    break;
+                case "Intern":
+                    inquirer.prompt(internQuestions).then((data) => addIntern(data));
+                default:
+                    break;
+            }
+        });
+
+}
+
+function init() {
+    inquirer.prompt(managerQuestions)
+        .then(function (data) {
+            console.log(data);
+            addManager(data)
+        });
+
+}
+
+function writeToFile(fileName, userAnswer) {
+    fs.writeFile(fileName, userAnswer, err => {
         if (err) {
             return console.log(err);
         }
         console.log('Successfully created the Team Profile Generator page!')
     });
 };
-
-function init() {
-    inquirer.prompt(managerQuestions)
-        .then(function (userAnswer) {
-            console.log(userAnswer)
-            //writeToFile("index.html", generateMarkdown(userAnswer));
-            newMember();
-        });
-}
-
-function newMember() {
-    inquirer.prompt(employeeQuestions)
-        .then((userAnswer) => {
-
-            switch (userAnswer.memberType) {
-                case "Engineer":
-                    inquirer.prompt(engineerQuestions).then(userAnswer);
-                    break;
-                    console.log(userAnswer)
-                case "Intern":
-                    inquirer.prompt(internQuestions).then(userAnswer);
-                    console.log(userAnswer)
-                default:
-                    break;
-
-            }
-
-            // writeToFile("index.html", generateMarkdown(userAnswer));
-        });
-
-}
-
 
 init();
